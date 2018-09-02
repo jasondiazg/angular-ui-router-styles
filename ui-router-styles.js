@@ -10,8 +10,8 @@
     .module('uiRouterStyles', ['ui.router'])
     .directive('uiRouterStyles', uiRouterStylesDirective);
 
-  uiRouterStylesDirective.$inject = ['$rootScope', '$compile', '$state', '$interpolate', '$document'];
-  function uiRouterStylesDirective($rootScope, $compile, $state, $interpolate, $document) {
+  uiRouterStylesDirective.$inject = ['$compile', '$state', '$interpolate', '$document', '$transitions'];
+  function uiRouterStylesDirective($compile, $state, $interpolate, $document, $transitions) {
     var directive = {
       restrict: 'EA',
       link: uiRouterStylesLink
@@ -31,7 +31,7 @@
 
       function activate() {
         angular.element($document[0].head).append($compile(html)(scope));
-        $rootScope.$on('$stateChangeSuccess', stateChangeSuccessCallback);
+        $transitions.onSuccess({}, stateChangeSuccessCallback);
       }
 
       // Get the parent state
@@ -42,12 +42,12 @@
         return name && $state.get(name);
       }
 
-      function stateChangeSuccessCallback(evt, toState) {
+      function stateChangeSuccessCallback(transition) {
         // From current state to the root
         var stylesObject = {};
         scope.routeStyles = [];
 
-        for(var state = toState; state && state.name !== ''; state=$$parentState(state)) {
+        for(var state = transition.$to(); state && state.name !== ''; state=$$parentState(state)) {
           if(state && state.data && state.data.css) {
             if(!Array.isArray(state.data.css)) {
               state.data.css = [state.data.css];

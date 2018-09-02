@@ -3,7 +3,7 @@ angular-ui-router-styles
 
 [![Build Status](https://travis-ci.org/manuelmazzuola/angular-ui-router-styles.svg)](https://travis-ci.org/manuelmazzuola/angular-ui-router-styles)
 
-This is a simple module for AngularJS that provides the ability to have route-specific CSS stylesheets, by integrating with Angular [uiRouter](https://github.com/angular-ui/ui-router).
+This is a simple module for AngularJS that provides the ability to have route-specific CSS stylesheets, by integrating with Angular [uiRouter](https://github.com/angular-ui/ui-router) with support to 1.x.x version.
 
 What does it do?
 ---------------
@@ -100,7 +100,7 @@ How to install:
 })
 ```
 
-A simple plunkr to understand the usage: http://plnkr.co/edit/HIcYEj2QRqBCwbZCU0Il?p=preview
+A simple plunkr to understand the usage: http://next.plnkr.co/edit/Wucdd7AwWonBtFxe
 
 **Things to notice:**
 * Specifying a css property on the route is completely optional. If the state doesn't have a css property, the service will simply do nothing for that route.
@@ -112,4 +112,4 @@ This directive does the following things:
 
 * It compiles (using `$compile`) an html string that creates a set of <link /> tags for every item in the `data.css` state property using `ng-repeat` and `ng-href`.
 * It appends that compiled set of `<link />` elements to the `<head>` tag.
-* It then uses the `$rootScope` to listen for `'$stateChangeSuccess'` events. For every `'$stateChangeSuccess'` event, it cleans all css appended before and adds the new css file(s) to the `<head>` tag if there are any.
+* It then uses the `$transitions` to listen for `'onSuccess'` event. For every `'$onSuccess'` event, it cleans all css appended before and adds the new css file(s) to the `<head>` tag if there are any.
